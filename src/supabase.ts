@@ -7,8 +7,8 @@ const supabase = supabaseConfigured ? createClient(url!, anonKey!) : null;
 export async function fetchPublishedProjects(): Promise<Project[]> {
   if (!supabase) return [];
   const { data, error } = await supabase.from('projects')
-    .select('slug,title,kind,year,role,description,cover_style,tag,context,approach,learning')
+    .select('slug,title,kind,year,role,description,cover_style,tag,context,approach,learning,team,duration,quote,tools,translations')
     .eq('published', true).order('sort_order', { ascending: true });
   if (error) throw error;
-  return (data ?? []).map((item) => ({ id: item.slug, title: item.title, kind: item.kind, year: item.year, role: item.role, desc: item.description, className: item.cover_style, tag: item.tag, context: item.context, approach: item.approach, learning: item.learning }));
+  return (data ?? []).map((item) => ({ id: item.slug, title: item.title, kind: item.kind, year: item.year, role: item.role, desc: item.description, className: item.cover_style, tag: item.tag, context: item.context, approach: item.approach, learning: item.learning, team: item.team, duration: item.duration, quote: item.quote, tools: item.tools, translations: item.translations }));
 }

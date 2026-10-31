@@ -12,12 +12,24 @@ create table if not exists public.projects (
   context text not null,
   approach text not null,
   learning text not null,
+  team text,
+  duration text,
+  quote text,
+  tools text[] not null default '{}',
+  translations jsonb not null default '{}'::jsonb,
   published boolean not null default false,
   featured boolean not null default false,
   sort_order integer not null default 0,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
+
+-- Keep existing tables compatible as case-study fields evolve.
+alter table public.projects add column if not exists team text;
+alter table public.projects add column if not exists duration text;
+alter table public.projects add column if not exists quote text;
+alter table public.projects add column if not exists tools text[] not null default '{}';
+alter table public.projects add column if not exists translations jsonb not null default '{}'::jsonb;
 
 alter table public.projects enable row level security;
 revoke all on public.projects from anon, authenticated;
