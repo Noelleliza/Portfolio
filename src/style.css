@@ -23,3 +23,16 @@
 .cv-extra small{font-size:9px;letter-spacing:1px;color:var(--muted)}
 .cv-extra p{font-size:11px;line-height:1.7;color:#595952;margin:8px 0 0}
 @media(max-width:760px){.experience-highlights{grid-template-columns:1fr;gap:29px}.highlight-card .project-art{height:clamp(235px,68vw,340px)}.cv-download{align-items:flex-start;flex-direction:column}.portrait-placeholder{height:290px}}
+
+/* Simple, image-only portrait with a responsive arch crop. */
+.about-section{align-items:center}
+.portrait-placeholder{width:min(100%,320px);height:auto;aspect-ratio:4/5;max-width:320px;margin:0;background:transparent;border-radius:48% 48% 2px 2px;display:block;overflow:hidden}
+.portrait-placeholder::before{display:none}
+.portrait-placeholder img{width:100%;height:100%;object-fit:cover;object-position:center 23%;border-radius:inherit}
+.projects-empty{min-height:145px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:24px;padding:25px 0}
+.projects-empty span{font-size:9px;letter-spacing:1.3px;color:var(--orange)}
+.projects-empty p{font:italic 22px/1.3 'Playfair Display',serif;color:#62625b;margin:0;max-width:460px}
+@media(max-width:760px){.portrait-placeholder{width:min(100%,380px);max-width:380px;margin:0 auto;aspect-ratio:4/5;height:auto}.projects-empty{align-items:flex-start;flex-direction:column;gap:12px;min-height:unset}.projects-empty p{font-size:20px}}
+.about-story p{font-size:13px;line-height:1.8;color:#595952;max-width:570px;margin:0 0 16px}
+.about-story p:last-child{margin-bottom:0}
+.about-links{margin-top:25px}

@@ -49,32 +49,17 @@ function CaseStudy({ p, onBack }: { p: Project; onBack: () => void }) {
   </main>;
 }
 
-const healthProjects = [
-  { title: 'Prise en charge des addictions', label: 'Eos', style: 'art-lilac' },
-  { title: 'Solutions numériques pour les infirmier·ères', label: 'Santé · outils numériques', style: 'art-green' },
-  { title: 'Détection des troubles neurodéveloppementaux', label: 'Novadev', style: 'art-orange' },
-];
-
-function ExperienceHighlights() {
-  return <div className="experience-highlights">
-    {healthProjects.map((item) => <article className="highlight-card" key={item.title}>
-      <div className={`project-art ${item.style}`} aria-hidden="true"><span className="art-note">{item.label}</span><div className="highlight-shape" /></div>
-      <div className="highlight-copy"><p className="project-kind">KAMET VENTURES <span>·</span> SANTÉ</p><h3>{item.title}</h3><p>Projet d’innovation santé auquel j’ai contribué au sein de mon rôle de Lead UX Researcher & Service Designer.</p></div>
-    </article>)}
-  </div>;
-}
-
 function App() {
   const [active, setActive] = React.useState<Project | null>(null);
   const [projects, setProjects] = React.useState<Project[]>(supabaseConfigured ? [] : initialProjects);
-  React.useEffect(() => { fetchPublishedProjects().then(setProjects).catch(() => { /* Keep experience highlights available if Supabase is temporarily unavailable. */ }); }, []);
+  React.useEffect(() => { fetchPublishedProjects().then(setProjects).catch(() => { /* Keep the neutral empty state if Supabase is unavailable. */ }); }, []);
   React.useEffect(() => { window.scrollTo(0, 0); }, [active]);
 
   return <><div id="top" /><Header />{active ? <CaseStudy p={active} onBack={() => setActive(null)} /> : <main>
     <section className="hero">
       <div className="hero-copy"><p className="eyebrow">LEAD UX DESIGNER <span>·</span> UX STRATÉGIE & RECHERCHE <span>·</span> PARIS</p>
         <h1>Des expériences<br />plus <em>humaines.</em></h1>
-        <p className="hero-desc">Je suis Noëlle Lewkowicz, designer UX franco-américaine, chercheuse et service designer. J’accompagne les équipes de la recherche à la stratégie et à la conception de services.</p>
+        <p className="hero-desc">Je suis Noëlle Lewkowicz, designer UX franco-américaine, researcher et service designer. J’accompagne les équipes de la recherche à la stratégie et à la conception de services.</p>
         <div className="hero-actions"><a className="button button-dark" href="#projets">Voir mes projets <ArrowDown size={16} /></a><a className="text-link" href="mailto:noelle.lewkowicz.pro@gmail.com">Parlons-en <ArrowUpRight size={15} /></a></div>
       </div>
       <div className="hero-art" aria-label="Composition abstraite en formes courbes"><div className="hero-sun" /><div className="hero-loop loop-one" /><div className="hero-loop loop-two" /><div className="hero-sticker">curiosité<br />en mouvement ↗</div><span className="hero-index">PARIS · FR / EN</span></div>
@@ -82,11 +67,22 @@ function App() {
     </section>
     <section className="intro-strip"><span className="section-num">01</span><p>Je transforme les sujets complexes en expériences <em>claires, cohérentes et inclusives.</em></p><a href="#apropos" aria-label="En savoir plus sur mon approche"><ArrowDown /></a></section>
     <section className="projects-section" id="projets">
-      <div className="section-header"><div><p className="eyebrow">SANTÉ · INNOVATION · 2022—2025</p><h2>{projects.length ? 'Études de cas' : 'Projets en santé'}<span>.</span></h2></div><p>{projects.length ? 'Recherche et conception au service d’expériences plus utiles.' : 'Quelques projets de santé auxquels j’ai contribué chez Kamet Ventures.'}</p></div>
-      {projects.length ? <><div className="project-grid">{projects.map((p) => <button key={p.id} className="project-card" onClick={() => setActive(p)}><Art p={p} /><div className="project-info"><div><p className="project-kind">{p.kind} <span>·</span> {p.year}</p><h3>{p.title}</h3><p className="project-desc">{p.desc}</p><p className="project-role">Rôle : {p.role}</p></div><span className="card-arrow"><ArrowUpRight /></span></div></button>)}</div></> : <ExperienceHighlights />}
+      <div className="section-header"><div><p className="eyebrow">PORTFOLIO · PARIS</p><h2>Projets choisis<span>.</span></h2></div><p>Études de cas à venir.</p></div>
+      {projects.length ? <div className="project-grid">{projects.map((p) => <button key={p.id} className="project-card" onClick={() => setActive(p)}><Art p={p} /><div className="project-info"><div><p className="project-kind">{p.kind} <span>·</span> {p.year}</p><h3>{p.title}</h3><p className="project-desc">{p.desc}</p><p className="project-role">Rôle : {p.role}</p></div><span className="card-arrow"><ArrowUpRight /></span></div></button>)}</div> : <div className="projects-empty"><span>EN PRÉPARATION</span><p>Je prépare une sélection de projets à partager ici prochainement.</p></div>}
     </section>
-    <section className="about-section" id="apropos"><div className="about-side"><p className="eyebrow">02 — À PROPOS</p><div className="portrait-placeholder"><img src="/noelle-lewkowicz.jpg" alt="Noëlle Lewkowicz, designer UX à Paris" /><span className="portrait-caption">Noëlle<br />Lewkowicz</span></div></div>
-      <div className="about-content"><h2>Le design commence<br />par <em>l’écoute.</em></h2><p>Je suis une designer UX franco-américaine, bilingue français-anglais, basée à Paris. J’aide les organisations à transformer des besoins complexes en produits et services viables.</p><p>Mon expérience couvre la recherche qualitative et quantitative, la stratégie UX et le service design. J’aime travailler avec des équipes pluridisciplinaires, faire émerger les opportunités et transformer les premiers concepts en prototypes testables et en feuilles de route concrètes.</p><div className="skills"><span>Recherche utilisateur</span><span>Entretiens & observation</span><span>Stratégie UX</span><span>Service blueprints</span><span>Prototypage & tests</span><span>Ateliers de co-création</span></div><IconLink href={cvUrl} >Voir mon CV</IconLink></div>
+    <section className="about-section" id="apropos"><div className="about-side"><p className="eyebrow">02 — ABOUT ME</p><div className="portrait-placeholder"><img src="/noelle-lewkowicz.jpg" alt="Noëlle Lewkowicz, designer UX à Paris" /></div></div>
+      <div className="about-content" lang="en"><h2>Curiosity<br /><em>comes first.</em></h2>
+        <div className="about-story">
+          <p>Growing up as a Franco-American in France, I had two certainties from an early age: I wanted to make a living doing something creative, and I wanted to live in the United States one day.</p>
+          <p>Fortunately, I got to make both happen. In 2011, I graduated from Parsons in New York, where I stayed for six years, working across fashion and graphic design. Along the way, I discovered how much I enjoyed structuring information, designing presentations, and turning complex ideas into clear and engaging stories.</p>
+          <p>I also became increasingly curious about what happened before the design process. How well did we really understand people’s needs? Why were certain products considered “bestsellers”? And what could we learn by asking better questions rather than simply repeating what had worked before?</p>
+          <p>That curiosity led me to UX design and research, with further studies at SVA and Bloc in 2016–2017, before returning to Paris, where I have been working in UX and service design ever since.</p>
+          <p>Today, I work at the intersection of research, strategy, design, and storytelling. I enjoy exploring complex problems, making sense of what I learn, and turning insights into meaningful experiences, services, and actionable directions. My visual design background remains an important part of how I communicate ideas and bring people along in the process.</p>
+          <p>I also teach, which has become a natural extension of my practice. I previously taught Design Fiction at the CNAM, and since September 2026, I teach UX &amp; Service Design and Design Fiction at Penninghen. Teaching keeps me curious, challenges me to question my assumptions, and gives me the opportunity to share and rethink what I’ve learned.</p>
+          <p>After more than a decade across visual design, UX, research, service design, and futures thinking, I’m particularly drawn to ambiguous challenges: the ones that require asking the right questions before jumping to solutions.</p>
+        </div>
+        <div className="about-links"><IconLink href={cvUrl}>View my CV</IconLink></div>
+      </div>
     </section>
     <section className="cv-section" id="cv"><div><p className="eyebrow">03 — PARCOURS</p><h2>Expérience<br /><em>en bref.</em></h2><p className="cv-hint">Recherche, stratégie et conception dans des secteurs variés, avec une expérience forte en healthtech.</p><div className="cv-download"><a className="button button-outline" href={cvUrl} target="_blank" rel="noreferrer">Consulter le CV (EN) <ArrowUpRight size={16} /></a><a className="text-link" href={cvUrl} download>Télécharger le PDF <ArrowDown size={14} /></a></div></div>
       <div className="timeline">
