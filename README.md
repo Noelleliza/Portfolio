@@ -12,7 +12,7 @@ pnpm build
 
 ## Projets et Supabase
 
-La première étude de cas (Legrand) est fournie dans `src/projects.ts` en anglais et en français. Pour ajouter des cas depuis Supabase :
+Les études de cas Legrand, Addiction Care, Digital Wallonia et Cancer patient experience sont fournies dans `src/projects.ts` en anglais et en français. Pour ajouter des cas depuis Supabase :
 
 1. Créez un projet Supabase.
 2. Exécutez `supabase/schema.sql` dans l’éditeur SQL du projet.

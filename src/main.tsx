@@ -1,12 +1,17 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { ArrowDown, ArrowLeft, ArrowRight, ArrowUpRight, Menu, X } from 'lucide-react';
+import Lenis from 'lenis';
+import 'lenis/dist/lenis.css';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { projects as initialProjects, type Project } from './projects';
 import { fetchPublishedProjects, supabaseConfigured } from './supabase';
 import './style.css';
 
 type Language = 'fr' | 'en';
 const cvUrl = '/noelle-lewkowicz-cv-en-2026.pdf';
+gsap.registerPlugin(ScrollTrigger);
 
 const copy = {
   fr: {
@@ -20,7 +25,7 @@ const copy = {
     seeProjects: 'Voir mes projets', letsTalk: 'Parlons-en', heroSticker: <>curiosité<br />en mouvement ↗</>,
     independent: 'Designer indépendante · Paris', capabilities: 'Recherche · Stratégie · Service design',
     intro: <>Je transforme les sujets complexes en expériences <em>claires, cohérentes et inclusives.</em></>,
-    sectionProjects: 'Projets choisis', projectEyebrow: 'PORTFOLIO · RECHERCHE UX · SERVICE DESIGN', projectIntro: 'Une étude de cas, de la problématique aux résultats.', projectsPending: 'EN PRÉPARATION', projectsEmpty: 'D’autres études de cas seront bientôt disponibles.',
+    sectionProjects: 'Projets choisis', projectEyebrow: 'PORTFOLIO · RECHERCHE UX · SERVICE DESIGN', projectIntro: 'Des projets, de la problématique aux résultats.', projectsPending: 'EN PRÉPARATION', projectsEmpty: 'D’autres études de cas seront bientôt disponibles.',
     roleLabel: 'Rôle', aboutLabel: '02 — À PROPOS', aboutTitle: <>La curiosité<br /><em>comme boussole.</em></>,
     aboutParagraphs: [
       'Ayant grandi en France avec une double culture franco-américaine, j’avais deux certitudes très tôt : je voulais exercer un métier créatif, et vivre un jour aux États-Unis.',
@@ -57,12 +62,12 @@ const copy = {
     language: 'Choose language', french: 'French', english: 'English', menuOpen: 'Open menu', menuClose: 'Close menu',
     navProjects: 'Projects', navAbout: 'About', navCv: 'CV', navContact: 'Contact',
     heroEyebrow: 'LEAD UX DESIGNER · UX STRATEGY & RESEARCH · PARIS',
-    heroTitle: <>Better experiences,<br /><em>more human.</em></>,
-    heroDescription: 'I’m Noëlle Lewkowicz, a Franco-American UX designer, researcher and service designer. I help teams move from research and strategy to the design of meaningful services.',
+    heroTitle: <>I’m Noëlle,<br />a Franco-American<br />UX designer / Strategist / Researcher &amp; Service Designer in Paris</>,
+    heroDescription: 'I help teams move from research and strategy to the design of meaningful services.',
     seeProjects: 'View my projects', letsTalk: 'Get in touch', heroSticker: <>curiosity<br />in motion ↗</>,
     independent: 'Independent designer · Paris', capabilities: 'Research · Strategy · Service design',
     intro: <>I turn complex topics into experiences that are <em>clear, coherent and inclusive.</em></>,
-    sectionProjects: 'Selected projects', projectEyebrow: 'PORTFOLIO · UX RESEARCH · SERVICE DESIGN', projectIntro: 'A case study, from challenge to outcome.', projectsPending: 'IN PROGRESS', projectsEmpty: 'More case studies coming soon.',
+    sectionProjects: 'Selected projects', projectEyebrow: 'PORTFOLIO · UX RESEARCH · SERVICE DESIGN', projectIntro: 'Selected projects, from challenge to outcome.', projectsPending: 'IN PROGRESS', projectsEmpty: 'More case studies coming soon.',
     roleLabel: 'Role', aboutLabel: '02 — ABOUT ME', aboutTitle: <>Curiosity<br /><em>comes first.</em></>,
     aboutParagraphs: [
       'Growing up as a Franco-American in France, I had two certainties from an early age: I wanted to make a living doing something creative, and I wanted to live in the United States one day.',
@@ -99,17 +104,17 @@ function IconLink({ href, children }: { href: string; children: React.ReactNode 
   return <a className="text-link" href={href}>{children}<ArrowUpRight size={15} /></a>;
 }
 
-function Header({ language, onLanguageChange }: { language: Language; onLanguageChange: (language: Language) => void }) {
+function Header({ language, onLanguageChange, onNavigate }: { language: Language; onLanguageChange: (language: Language) => void; onNavigate: (target: string) => void }) {
   const [open, setOpen] = React.useState(false);
   const t = copy[language];
   return <header className="header">
-    <a href="#top" className="wordmark" aria-label="Noëlle Lewkowicz">NL<span>.</span></a>
+    <a href="#top" onClick={() => onNavigate('top')} className="wordmark" aria-label="Noëlle Lewkowicz">NL<span>.</span></a>
     <button className="menu-toggle" aria-label={open ? t.menuClose : t.menuOpen} aria-expanded={open} onClick={() => setOpen(!open)}>{open ? <X /> : <Menu />}</button>
     <nav className={open ? 'nav is-open' : 'nav'} aria-label={language === 'fr' ? 'Navigation principale' : 'Main navigation'}>
-      <a onClick={() => setOpen(false)} href="#projets">{t.navProjects}</a>
-      <a onClick={() => setOpen(false)} href="#apropos">{t.navAbout}</a>
-      <a onClick={() => setOpen(false)} href="#cv">{t.navCv}</a>
-      <a onClick={() => setOpen(false)} className="nav-contact" href="#contact">{t.navContact} <ArrowUpRight size={15} /></a>
+      <a onClick={() => { setOpen(false); onNavigate('projets'); }} href="#projets">{t.navProjects}</a>
+      <a onClick={() => { setOpen(false); onNavigate('apropos'); }} href="#apropos">{t.navAbout}</a>
+      <a onClick={() => { setOpen(false); onNavigate('cv'); }} href="#cv">{t.navCv}</a>
+      <a onClick={() => { setOpen(false); onNavigate('contact'); }} className="nav-contact" href="#contact">{t.navContact} <ArrowUpRight size={15} /></a>
       <div className="language-switch" role="group" aria-label={t.language}>
         <button type="button" aria-label={t.french} aria-pressed={language === 'fr'} className={language === 'fr' ? 'selected' : ''} onClick={() => onLanguageChange('fr')}>FR</button>
         <button type="button" aria-label={t.english} aria-pressed={language === 'en'} className={language === 'en' ? 'selected' : ''} onClick={() => onLanguageChange('en')}>EN</button>
@@ -141,13 +146,12 @@ function CaseStudy({ project, language, onBack }: { project: Project; language: 
     <button className="back-link" onClick={onBack}><ArrowLeft size={16} /> {t.backToProjects}</button>
     <div className="case-heading"><p className="eyebrow">{p.kind}{p.year && <> <span>·</span> {p.year}</>}</p><h1>{p.title}</h1><p className="case-intro">{p.desc}</p></div>
     <Art p={p} language={language} />
-    <div className="case-meta"><div><small>{t.myRole}</small><p>{p.role}</p></div><div><small>{t.team}</small><p>{p.team || (language === 'fr' ? 'Équipe pluridisciplinaire' : 'Cross-functional team')}</p></div><div><small>{t.duration}</small><p>{p.duration || '—'}</p></div></div>
+    {(p.role || p.team || p.duration || p.tools?.length) && <div className="case-meta">{p.role && <div><small>{t.myRole}</small><p>{p.role}</p></div>}{p.team && <div><small>{t.team}</small><p>{p.team}</p></div>}{p.duration && <div><small>{t.duration}</small><p>{p.duration}</p></div>}{!!p.tools?.length && <div className="case-meta-tools"><small>{t.tools}</small><ul>{p.tools.map((tool) => <li key={tool}>{tool}</li>)}</ul></div>}</div>}
     <div className="case-body">
-      <section><p className="eyebrow">{t.context}</p><h2>{t.contextTitle}</h2><p>{p.context}</p></section>
-      <section><p className="eyebrow">{t.approach}</p><h2>{t.approachTitle}</h2><p className="case-copy">{p.approach}</p></section>
-      <section><p className="eyebrow">{t.outcome}</p><h2>{t.outcomeTitle}</h2><p>{p.learning}</p></section>
+      {p.context && <section><p className="eyebrow">{t.context}</p><h2>{p.contextTitle || t.contextTitle}</h2><p>{p.context}</p></section>}
+      {p.approach && <section><p className="eyebrow">{t.approach}</p><h2>{p.approachTitle || t.approachTitle}</h2><p className="case-copy">{p.approach}</p></section>}
+      {p.learning && <section><p className="eyebrow">{t.outcome}</p><h2>{p.outcomeTitle || t.outcomeTitle}</h2><p>{p.learning}</p></section>}
       {p.quote && <figure className="client-quote"><p className="eyebrow">{t.clientFeedback}</p><blockquote>“{p.quote}”</blockquote></figure>}
-      {!!p.tools?.length && <div className="case-tools"><p className="eyebrow">{t.tools}</p><ul>{p.tools.map((tool) => <li key={tool}>{tool}</li>)}</ul></div>}
     </div>
     <section className="next-project"><p className="eyebrow">{t.continue}</p><a href="#projets" onClick={onBack}>{t.back} <ArrowRight /></a></section>
   </main>;
@@ -161,7 +165,98 @@ function App() {
   const [active, setActive] = React.useState<Project | null>(null);
   const [projects, setProjects] = React.useState<Project[]>(supabaseConfigured ? [] : initialProjects);
   const [aboutExpanded, setAboutExpanded] = React.useState(false);
+  const lenisRef = React.useRef<Lenis | null>(null);
   const t = copy[language];
+
+  React.useEffect(() => {
+    const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let lenis: Lenis | null = null;
+    const tick = (time: number) => lenis?.raf(time * 1000);
+
+    const configureScroll = () => {
+      if (motionPreference.matches) {
+        lenis?.destroy();
+        lenis = null;
+        lenisRef.current = null;
+        gsap.ticker.remove(tick);
+        return;
+      }
+      if (lenis) return;
+      lenis = new Lenis({ duration: 1.05, smoothWheel: true, anchors: false });
+      lenisRef.current = lenis;
+      lenis.on('scroll', ScrollTrigger.update);
+      gsap.ticker.add(tick);
+      gsap.ticker.lagSmoothing(0);
+    };
+
+    configureScroll();
+    motionPreference.addEventListener('change', configureScroll);
+    return () => {
+      motionPreference.removeEventListener('change', configureScroll);
+      gsap.ticker.remove(tick);
+      lenis?.destroy();
+      lenis = null;
+      lenisRef.current = null;
+    };
+  }, []);
+
+  React.useLayoutEffect(() => {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduceMotion) return;
+
+    const context = gsap.context(() => {
+      const hero = document.querySelector('.hero');
+      if (!active && hero) {
+        const intro = gsap.timeline({ defaults: { ease: 'power3.out' } });
+        intro
+          .fromTo('.hero-copy > *', { y: 24, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.75, stagger: 0.1 })
+          .fromTo('.hero-art', { y: 28, scale: 0.97, autoAlpha: 0 }, { y: 0, scale: 1, autoAlpha: 1, duration: 1 }, '-=0.65')
+          .fromTo('.hero-foot > *', { y: 10, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.45, stagger: 0.08 }, '-=0.55');
+
+        gsap.to('.hero-loop', { rotate: '+=9', duration: 7, ease: 'sine.inOut', yoyo: true, repeat: -1, stagger: 0.4 });
+        gsap.to('.hero-sticker', { y: -8, rotate: 4, duration: 2.8, ease: 'sine.inOut', yoyo: true, repeat: -1 });
+      }
+
+      gsap.utils.toArray<HTMLElement>('.intro-strip, .section-header, .about-side, .about-content, .cv-section > div:first-child, .contact-section > *').forEach((element) => {
+        gsap.fromTo(element, { y: 28, autoAlpha: 0 }, {
+          y: 0, autoAlpha: 1, duration: 0.75, ease: 'power2.out',
+          scrollTrigger: { trigger: element, start: 'top 88%', once: true },
+        });
+      });
+
+      if (document.querySelector('.project-grid')) {
+        gsap.fromTo('.project-card', { y: 38, autoAlpha: 0 }, {
+          y: 0, autoAlpha: 1, duration: 0.7, stagger: 0.12, ease: 'power2.out',
+          scrollTrigger: { trigger: '.project-grid', start: 'top 86%', once: true },
+        });
+      }
+      if (document.querySelector('.timeline')) {
+        gsap.fromTo('.timeline-item, .cv-extra > div', { x: 18, autoAlpha: 0 }, {
+          x: 0, autoAlpha: 1, duration: 0.6, stagger: 0.1, ease: 'power2.out',
+          scrollTrigger: { trigger: '.timeline', start: 'top 84%', once: true },
+        });
+      }
+      if (active) {
+        gsap.fromTo('.case-heading > *', { y: 24, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.65, stagger: 0.12, ease: 'power2.out' });
+        gsap.fromTo('.case-page > .project-art', { scale: 0.98, autoAlpha: 0 }, { scale: 1, autoAlpha: 1, duration: 0.8, ease: 'power2.out', delay: 0.15 });
+        gsap.utils.toArray<HTMLElement>('.case-meta, .case-body > section, .next-project').forEach((element) => {
+          gsap.fromTo(element, { y: 24, autoAlpha: 0 }, {
+            y: 0, autoAlpha: 1, duration: 0.65, ease: 'power2.out',
+            scrollTrigger: { trigger: element, start: 'top 88%', once: true },
+          });
+        });
+      }
+      if (!active) {
+        gsap.to('.hero-art', {
+          yPercent: 6,
+          ease: 'none',
+          scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 0.7 },
+        });
+      }
+    });
+
+    return () => context.revert();
+  }, [active, language, projects.length]);
 
   React.useEffect(() => {
     if (!supabaseConfigured) return;
@@ -173,8 +268,14 @@ function App() {
     document.querySelector('meta[name="description"]')?.setAttribute('content', t.description);
     try { localStorage.setItem('portfolio-language', language); } catch { /* Language still works for this visit. */ }
   }, [language, t.description, t.documentTitle]);
-  React.useEffect(() => { window.scrollTo(0, 0); }, [active]);
-
+  React.useLayoutEffect(() => {
+    if (!active) return;
+    const frame = window.requestAnimationFrame(() => {
+      lenisRef.current?.scrollTo(0, { force: true, immediate: true });
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    });
+    return () => window.cancelAnimationFrame(frame);
+  }, [active]);
   function changeLanguage(nextLanguage: Language) {
     setLanguage(nextLanguage);
     setAboutExpanded(false);
@@ -183,10 +284,19 @@ function App() {
   const visibleProjects = projects.filter((project) => language === 'en' || Boolean(project.translations?.fr));
   const about = t.aboutParagraphs as string[];
 
-  return <><div id="top" /><Header language={language} onLanguageChange={changeLanguage} />{active ? <CaseStudy project={active} language={language} onBack={() => setActive(null)} /> : <main>
+  function navigateTo(target: string) {
+    setActive(null);
+    if (target === 'top' && !active) window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function openProject(project: Project) {
+    setActive(project);
+  }
+
+  return <><div id="top" /><Header language={language} onLanguageChange={changeLanguage} onNavigate={navigateTo} />{active ? <CaseStudy project={active} language={language} onBack={() => navigateTo('projets')} /> : <main>
     <section className="hero">
       <div className="hero-copy"><p className="eyebrow">{t.heroEyebrow}</p>
-        <h1>{t.heroTitle}</h1>
+        <h1 className={language === 'en' ? 'hero-title-long' : undefined}>{t.heroTitle}</h1>
         <p className="hero-desc">{t.heroDescription}</p>
         <div className="hero-actions"><a className="button button-dark" href="#projets">{t.seeProjects} <ArrowDown size={16} /></a><a className="text-link" href="mailto:noelle.lewkowicz.pro@gmail.com">{t.letsTalk} <ArrowUpRight size={15} /></a></div>
       </div>
@@ -198,7 +308,7 @@ function App() {
       <div className="section-header"><div><p className="eyebrow">{t.projectEyebrow}</p><h2>{t.sectionProjects}<span>.</span></h2></div><p>{t.projectIntro}</p></div>
       {visibleProjects.length ? <div className="project-grid">{visibleProjects.map((project) => {
         const p = localizedProject(project, language);
-        return <button key={p.id} className="project-card" onClick={() => setActive(project)}><Art p={project} language={language} /><div className="project-info"><div><p className="project-kind">{p.kind}{p.year && <> <span>·</span> {p.year}</>}</p><h3>{p.title}</h3><p className="project-desc">{p.desc}</p><p className="project-role">{t.roleLabel}: {p.role}</p></div><span className="card-arrow"><ArrowUpRight /></span></div></button>;
+        return <button key={p.id} className="project-card" onClick={() => openProject(project)}><Art p={project} language={language} /><div className="project-info"><div><p className="project-kind">{p.kind}{p.year && <> <span>·</span> {p.year}</>}</p><h3>{p.title}</h3><p className="project-desc">{p.desc}</p>{p.role && <p className="project-role">{t.roleLabel}: {p.role}</p>}</div><span className="card-arrow"><ArrowUpRight /></span></div></button>;
       })}</div> : <div className="projects-empty"><span>{t.projectsPending}</span><p>{t.projectsEmpty}</p></div>}
     </section>
     <section className="about-section" id="apropos"><div className="about-side"><p className="eyebrow">{t.aboutLabel}</p><div className="portrait-placeholder"><img src="/noelle-lewkowicz.jpg" alt={language === 'fr' ? 'Noëlle Lewkowicz, designer UX à Paris' : 'Noëlle Lewkowicz, UX designer in Paris'} /></div></div>
@@ -222,7 +332,7 @@ function App() {
       </div>
     </section>
     <section className="contact-section" id="contact"><div className="contact-left"><p className="eyebrow">{t.contactLabel}</p><h2>{t.contactTitle}</h2></div><div className="contact-right"><p>{t.contactText}</p><a className="contact-email" href="mailto:noelle.lewkowicz.pro@gmail.com">noelle.lewkowicz.pro@gmail.com <ArrowUpRight /></a></div></section>
-  </main>}<footer className="footer"><a href="#top" className="wordmark">NL<span>.</span></a><span>Noëlle Lewkowicz · {t.footerRole}</span><a href="#top">{t.backToTop}</a><span>© 2026</span></footer></>;
+  </main>}<footer className="footer"><a href="#top" className="wordmark" onClick={() => navigateTo('top')}>NL<span>.</span></a><span>Noëlle Lewkowicz · {t.footerRole}</span><a href="#top" onClick={() => navigateTo('top')}>{t.backToTop}</a><span>© 2026</span></footer></>;
 }
 
 createRoot(document.getElementById('root')!).render(<React.StrictMode><App /></React.StrictMode>);
