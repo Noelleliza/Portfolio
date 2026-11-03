@@ -20,7 +20,7 @@ const copy = {
     language: 'Choisir la langue', french: 'Français', english: 'Anglais', menuOpen: 'Ouvrir le menu', menuClose: 'Fermer le menu',
     navProjects: 'Projets', navAbout: 'À propos', navCv: 'CV', navContact: 'Me contacter',
     heroEyebrow: 'LEAD UX DESIGNER · UX STRATÉGIE & RECHERCHE · PARIS',
-    heroTitle: <>Des expériences<br />plus <em>humaines.</em></>,
+    heroTitle: <>Je suis Noëlle,<br />franco-américaine,<br /><em>designer UX, researcher<br />et service designer</em></>,
     heroDescription: 'Je suis Noëlle Lewkowicz, designer UX franco-américaine, researcher et service designer. J’accompagne les équipes de la recherche à la stratégie et à la conception de services.',
     seeProjects: 'Voir mes projets', letsTalk: 'Parlons-en', heroSticker: <>curiosité<br />en mouvement ↗</>,
     independent: 'Designer indépendante · Paris', capabilities: 'Recherche · Stratégie · Service design',
@@ -62,7 +62,7 @@ const copy = {
     language: 'Choose language', french: 'French', english: 'English', menuOpen: 'Open menu', menuClose: 'Close menu',
     navProjects: 'Projects', navAbout: 'About', navCv: 'CV', navContact: 'Contact',
     heroEyebrow: 'LEAD UX DESIGNER · UX STRATEGY & RESEARCH · PARIS',
-    heroTitle: <>I’m Noëlle,<br />a Franco-American<br />UX designer / Strategist / Researcher &amp; Service Designer in Paris</>,
+    heroTitle: <>I’m Noëlle,<br />a Franco-American<br /><em>UX designer, researcher<br />and service designer</em></>,
     heroDescription: 'I help teams move from research and strategy to the design of meaningful services.',
     seeProjects: 'View my projects', letsTalk: 'Get in touch', heroSticker: <>curiosity<br />in motion ↗</>,
     independent: 'Independent designer · Paris', capabilities: 'Research · Strategy · Service design',
@@ -296,7 +296,7 @@ function App() {
   return <><div id="top" /><Header language={language} onLanguageChange={changeLanguage} onNavigate={navigateTo} />{active ? <CaseStudy project={active} language={language} onBack={() => navigateTo('projets')} /> : <main>
     <section className="hero">
       <div className="hero-copy"><p className="eyebrow">{t.heroEyebrow}</p>
-        <h1 className={language === 'en' ? 'hero-title-long' : undefined}>{t.heroTitle}</h1>
+        <h1 className="hero-title-long">{t.heroTitle}</h1>
         <p className="hero-desc">{t.heroDescription}</p>
         <div className="hero-actions"><a className="button button-dark" href="#projets">{t.seeProjects} <ArrowDown size={16} /></a><a className="text-link" href="mailto:noelle.lewkowicz.pro@gmail.com">{t.letsTalk} <ArrowUpRight size={15} /></a></div>
       </div>
