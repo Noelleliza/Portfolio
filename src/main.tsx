@@ -11,6 +11,7 @@ import './style.css';
 
 type Language = 'fr' | 'en';
 const cvUrl = '/noelle-lewkowicz-cv-en-2026.pdf';
+const cvFrUrl = '/noelle-lewkowicz-cv-fr-2026.pdf';
 gsap.registerPlugin(ScrollTrigger);
 
 const copy = {
@@ -20,12 +21,11 @@ const copy = {
     language: 'Choisir la langue', french: 'Français', english: 'Anglais', menuOpen: 'Ouvrir le menu', menuClose: 'Fermer le menu',
     navProjects: 'Projets', navAbout: 'À propos', navCv: 'CV', navContact: 'Me contacter',
     heroEyebrow: 'LEAD UX DESIGNER · UX STRATÉGIE & RECHERCHE · PARIS',
-    heroTitle: <>Je suis Noëlle,<br />franco-américaine,<br /><em>designer UX, researcher<br />et service designer</em></>,
-    heroDescription: 'Je suis Noëlle Lewkowicz, designer UX franco-américaine, researcher et service designer. J’accompagne les équipes de la recherche à la stratégie et à la conception de services.',
+    heroTitle: <>Je suis Noëlle,<br /><em>UX designer</em><br />franco-américaine,<br /><em>researcher et designer<br />de services.</em></>,
+    heroDescription: 'J’accompagne les équipes de la recherche à la stratégie et à la conception de services.',
     seeProjects: 'Voir mes projets', letsTalk: 'Parlons-en', heroSticker: <>curiosité<br />en mouvement ↗</>,
-    independent: 'Designer indépendante · Paris', capabilities: 'Recherche · Stratégie · Service design',
     intro: <>Je transforme les sujets complexes en expériences <em>claires, cohérentes et inclusives.</em></>,
-    sectionProjects: 'Projets choisis', projectEyebrow: 'PORTFOLIO · RECHERCHE UX · SERVICE DESIGN', projectIntro: 'Des projets, de la problématique aux résultats.', projectsPending: 'EN PRÉPARATION', projectsEmpty: 'D’autres études de cas seront bientôt disponibles.',
+    sectionProjects: 'Projets choisis', projectEyebrow: 'PORTFOLIO · UX DESIGN · SERVICE DESIGN', projectIntro: 'Des projets, de la problématique aux résultats.', projectsPending: 'EN PRÉPARATION', projectsEmpty: 'D’autres études de cas seront bientôt disponibles.',
     roleLabel: 'Rôle', aboutLabel: '02 — À PROPOS', aboutTitle: <>La curiosité<br /><em>comme boussole.</em></>,
     aboutParagraphs: [
       'Ayant grandi en France avec une double culture franco-américaine, j’avais deux certitudes très tôt : je voulais exercer un métier créatif, et vivre un jour aux États-Unis.',
@@ -39,7 +39,7 @@ const copy = {
     readMore: 'Lire la suite', readLess: 'Réduire', viewCv: 'Voir mon CV',
     cvLabel: '03 — PARCOURS', cvTitle: <>Expérience<br /><em>en bref.</em></>,
     cvSummary: 'Recherche, stratégie et conception dans des secteurs variés, avec une expérience forte en healthtech.',
-    openCv: 'Consulter le CV (EN)', downloadCv: 'Télécharger le PDF',
+    openCv: 'Consulter le CV (EN)', openCvFr: 'Consulter le CV (FR)',
     present: 'AUJ.', freelance: 'Indépendante · Paris', freelanceDesc: 'Audit et refonte de produits et sites, recherche exploratoire et conception de nouveaux services.',
     kametRole: 'Lead UX Researcher & Service Designer', kametDesc: 'Stratégies de recherche et de design pour des projets d’innovation en santé.',
     weDigitalDesc: 'Expériences de bout en bout, entre besoins utilisateurs et opportunités business.',
@@ -65,9 +65,8 @@ const copy = {
     heroTitle: <>I’m Noëlle,<br />a Franco-American<br /><em>UX designer, researcher<br />and service designer</em></>,
     heroDescription: 'I help teams move from research and strategy to the design of meaningful services.',
     seeProjects: 'View my projects', letsTalk: 'Get in touch', heroSticker: <>curiosity<br />in motion ↗</>,
-    independent: 'Independent designer · Paris', capabilities: 'Research · Strategy · Service design',
     intro: <>I turn complex topics into experiences that are <em>clear, coherent and inclusive.</em></>,
-    sectionProjects: 'Selected projects', projectEyebrow: 'PORTFOLIO · UX RESEARCH · SERVICE DESIGN', projectIntro: 'Selected projects, from challenge to outcome.', projectsPending: 'IN PROGRESS', projectsEmpty: 'More case studies coming soon.',
+    sectionProjects: 'Selected projects', projectEyebrow: 'PORTFOLIO · UX DESIGN · SERVICE DESIGN', projectIntro: 'Selected projects, from challenge to outcome.', projectsPending: 'IN PROGRESS', projectsEmpty: 'More case studies coming soon.',
     roleLabel: 'Role', aboutLabel: '02 — ABOUT ME', aboutTitle: <>Curiosity<br /><em>comes first.</em></>,
     aboutParagraphs: [
       'Growing up as a Franco-American in France, I had two certainties from an early age: I wanted to make a living doing something creative, and I wanted to live in the United States one day.',
@@ -81,7 +80,7 @@ const copy = {
     readMore: 'Read more', readLess: 'Read less', viewCv: 'View my CV',
     cvLabel: '03 — EXPERIENCE', cvTitle: <>Experience<br /><em>at a glance.</em></>,
     cvSummary: 'Research, strategy and design across sectors, with deep experience in healthtech.',
-    openCv: 'View CV (English)', downloadCv: 'Download PDF',
+    openCv: 'View CV (English)', openCvFr: 'View CV (French)',
     present: 'PRESENT', freelance: 'Independent · Paris', freelanceDesc: 'Product and website audits and redesigns, exploratory research, and new service design.',
     kametRole: 'Lead UX Researcher & Service Designer', kametDesc: 'Research and design strategies for healthcare innovation projects.',
     weDigitalDesc: 'End-to-end experiences balancing user needs with business opportunities.',
@@ -129,9 +128,7 @@ function localizedProject(project: Project, language: Language): Project {
 }
 
 function Art({ p, language }: { p: Project; language: Language }) {
-  const tag = localizedProject(p, language).tag;
   return <div className={`project-art ${p.className}`} aria-hidden="true">
-    <span className="art-note">{tag}</span>
     {p.id === 'legrand-catalogue' ? <div className="catalog-sheets"><div className="catalog-sheet catalog-sheet-back" /><div className="catalog-sheet catalog-sheet-mid" /><div className="catalog-sheet catalog-sheet-front"><span /><span /><span /><span /></div></div> :
       p.className === 'art-lilac' ? <><div className="sun" /><div className="orbit orbit-a" /><div className="orbit orbit-b" /><div className="pill pill-a">{language === 'fr' ? 'écouter' : 'listen'}</div><div className="pill pill-b">{language === 'fr' ? 'comprendre' : 'understand'}</div><div className="pill pill-c">{language === 'fr' ? 'concevoir' : 'design'}</div></> :
         p.className === 'art-green' ? <><div className="route"><i /><i /><i /><i /></div><div className="route-label">{language === 'fr' ? <>le chemin<br />se dessine</> : <>the path<br />unfolds</>}</div><div className="route-dot" /></> :
@@ -144,7 +141,7 @@ function CaseStudy({ project, language, onBack }: { project: Project; language: 
   const p = localizedProject(project, language);
   return <main className="case-page" lang={language}>
     <button className="back-link" onClick={onBack}><ArrowLeft size={16} /> {t.backToProjects}</button>
-    <div className="case-heading"><p className="eyebrow">{p.kind}{p.year && <> <span>·</span> {p.year}</>}</p><h1>{p.title}</h1><p className="case-intro">{p.desc}</p></div>
+    <div className="case-heading"><p className="eyebrow">{p.client || p.kind}{p.year && <> <span>·</span> {p.year}</>}</p><h1>{p.title}</h1><p className="case-intro">{p.desc}</p></div>
     <Art p={p} language={language} />
     {(p.role || p.team || p.duration || p.tools?.length) && <div className="case-meta">{p.role && <div><small>{t.myRole}</small><p>{p.role}</p></div>}{p.team && <div><small>{t.team}</small><p>{p.team}</p></div>}{p.duration && <div><small>{t.duration}</small><p>{p.duration}</p></div>}{!!p.tools?.length && <div className="case-meta-tools"><small>{t.tools}</small><ul>{p.tools.map((tool) => <li key={tool}>{tool}</li>)}</ul></div>}</div>}
     <div className="case-body">
@@ -210,8 +207,7 @@ function App() {
         const intro = gsap.timeline({ defaults: { ease: 'power3.out' } });
         intro
           .fromTo('.hero-copy > *', { y: 24, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.75, stagger: 0.1 })
-          .fromTo('.hero-art', { y: 28, scale: 0.97, autoAlpha: 0 }, { y: 0, scale: 1, autoAlpha: 1, duration: 1 }, '-=0.65')
-          .fromTo('.hero-foot > *', { y: 10, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.45, stagger: 0.08 }, '-=0.55');
+          .fromTo('.hero-art', { y: 28, scale: 0.97, autoAlpha: 0 }, { y: 0, scale: 1, autoAlpha: 1, duration: 1 }, '-=0.65');
 
         gsap.to('.hero-loop', { rotate: '+=9', duration: 7, ease: 'sine.inOut', yoyo: true, repeat: -1, stagger: 0.4 });
         gsap.to('.hero-sticker', { y: -8, rotate: 4, duration: 2.8, ease: 'sine.inOut', yoyo: true, repeat: -1 });
@@ -301,14 +297,13 @@ function App() {
         <div className="hero-actions"><a className="button button-dark" href="#projets">{t.seeProjects} <ArrowDown size={16} /></a><a className="text-link" href="mailto:noelle.lewkowicz.pro@gmail.com">{t.letsTalk} <ArrowUpRight size={15} /></a></div>
       </div>
       <div className="hero-art" aria-label={language === 'fr' ? 'Composition abstraite en formes courbes' : 'Abstract composition of curved shapes'}><div className="hero-sun" /><div className="hero-loop loop-one" /><div className="hero-loop loop-two" /><div className="hero-sticker">{t.heroSticker}</div><span className="hero-index">PARIS · FR / EN</span></div>
-      <div className="hero-foot"><span>{t.independent}</span><span>{t.capabilities}</span></div>
     </section>
     <section className="intro-strip"><span className="section-num">01</span><p>{t.intro}</p><a href="#apropos" aria-label={language === 'fr' ? 'En savoir plus sur mon approche' : 'Learn more about my approach'}><ArrowDown /></a></section>
     <section className="projects-section" id="projets">
       <div className="section-header"><div><p className="eyebrow">{t.projectEyebrow}</p><h2>{t.sectionProjects}<span>.</span></h2></div><p>{t.projectIntro}</p></div>
       {visibleProjects.length ? <div className="project-grid">{visibleProjects.map((project) => {
         const p = localizedProject(project, language);
-        return <button key={p.id} className="project-card" onClick={() => openProject(project)}><Art p={project} language={language} /><div className="project-info"><div><p className="project-kind">{p.kind}{p.year && <> <span>·</span> {p.year}</>}</p><h3>{p.title}</h3><p className="project-desc">{p.desc}</p>{p.role && <p className="project-role">{t.roleLabel}: {p.role}</p>}</div><span className="card-arrow"><ArrowUpRight /></span></div></button>;
+        return <button key={p.id} className="project-card" onClick={() => openProject(project)}><Art p={project} language={language} /><div className="project-info"><div><p className="project-kind">{p.tag}</p><h3>{p.title}</h3><p className="project-desc">{p.desc}</p>{p.role && <p className="project-role">{t.roleLabel}: {p.role}</p>}</div><span className="card-arrow"><ArrowUpRight /></span></div></button>;
       })}</div> : <div className="projects-empty"><span>{t.projectsPending}</span><p>{t.projectsEmpty}</p></div>}
     </section>
     <section className="about-section" id="apropos"><div className="about-side"><p className="eyebrow">{t.aboutLabel}</p><div className="portrait-placeholder"><img src="/noelle-lewkowicz.jpg" alt={language === 'fr' ? 'Noëlle Lewkowicz, designer UX à Paris' : 'Noëlle Lewkowicz, UX designer in Paris'} /></div></div>
@@ -322,7 +317,7 @@ function App() {
         <div className="about-links"><IconLink href={cvUrl}>{t.viewCv}</IconLink></div>
       </div>
     </section>
-    <section className="cv-section" id="cv"><div><p className="eyebrow">{t.cvLabel}</p><h2>{t.cvTitle}</h2><p className="cv-hint">{t.cvSummary}</p><div className="cv-download"><a className="button button-outline" href={cvUrl} target="_blank" rel="noreferrer">{t.openCv} <ArrowUpRight size={16} /></a><a className="text-link" href={cvUrl} download>{t.downloadCv} <ArrowDown size={14} /></a></div></div>
+    <section className="cv-section" id="cv"><div><p className="eyebrow">{t.cvLabel}</p><h2>{t.cvTitle}</h2><p className="cv-hint">{t.cvSummary}</p><div className="cv-download"><a className="button button-outline" href={cvUrl} target="_blank" rel="noreferrer">{t.openCv} <ArrowUpRight size={16} /></a><a className="button button-outline" href={cvFrUrl} target="_blank" rel="noreferrer">{t.openCvFr} <ArrowUpRight size={16} /></a></div></div>
       <div className="timeline">
         <div className="timeline-item"><span>2025 — {t.present}</span><div><h3>Lead UX &amp; Service Designer</h3><p>{t.freelance}</p><p>{t.freelanceDesc}</p></div></div>
         <div className="timeline-item"><span>2022 — 2025</span><div><h3>{t.kametRole}</h3><p>Kamet Ventures · Paris</p><p>{t.kametDesc}</p></div></div>

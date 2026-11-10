@@ -17,6 +17,7 @@ export type Project = {
   duration?: string;
   quote?: string;
   tools?: string[];
+  client?: string;
   translations?: Partial<Record<'fr' | 'en', ProjectTranslation>>;
 };
 
@@ -36,6 +37,7 @@ export type ProjectTranslation = {
   duration?: string;
   quote?: string;
   tools?: string[];
+  client?: string;
 };
 
 export const projects: Project[] = [
@@ -48,6 +50,7 @@ export const projects: Project[] = [
     desc: 'Helping global users find current product information, related products and local-language documentation.',
     className: 'art-lilac',
     tag: 'LEGRAND · GLOBAL CATALOG',
+    client: 'Legrand',
     context: 'Legrand, a specialist in electronic products and infrastructures, needed a digital catalog for its global users. Smaller countries had less equal access to resources and faced greater difficulty finding the documentation they needed.',
     approach: 'During a two-month scoping phase, we followed a Double Diamond approach: researching, designing, testing and iterating. My role was to identify user needs through research and analysis, then design and test a prototype against user and business requirements.\n\nResearch was conducted in seven countries by a team of researchers and Legrand stakeholders. I gathered and analyzed the findings to synthesize user needs, pain points and local differences. Users struggled to find up-to-date product information, identify associated products needed for an installation, and access legal documentation in their local language. They often had to consult multiple sources, losing valuable time.\n\nWe shared these findings in a co-creation workshop to define MVP-level features. Using How Might We questions, Idea Napkin and story mapping, participants worked in groups focused on installer, architect and distributor personas.\n\nI then mapped user journeys and developed rough paper sketches before moving to a high-fidelity Figma prototype. We tested and iterated the prototype with end users across roles and countries.',
     learning: 'The tested prototype received an average score of 8/10. It addressed a long-standing need for a digital catalog while remaining simple and accessible.',
@@ -62,6 +65,7 @@ export const projects: Project[] = [
         role: 'Recherche utilisateur, analyse, conception et test du prototype',
         desc: 'Aider les utilisateurs à trouver les informations produits à jour, les produits associés et la documentation dans leur langue.',
         tag: 'LEGRAND · CATALOGUE MONDIAL',
+        client: 'Legrand',
         context: 'Legrand, spécialiste des produits et infrastructures électriques, souhaitait créer un catalogue numérique pour ses utilisateurs à travers le monde. Les petits marchés avaient un accès plus limité aux ressources et rencontraient davantage de difficultés pour trouver la documentation nécessaire.',
         approach: 'Pendant une phase de cadrage de deux mois, nous avons suivi une démarche de Double Diamond : recherche, conception, test et itération. Mon rôle consistait à identifier les besoins utilisateurs par la recherche et l’analyse, puis à concevoir et tester un prototype à partir de ces besoins et des exigences métier.\n\nLa recherche a été menée dans sept pays par une équipe de chercheurs et de parties prenantes de Legrand. J’ai rassemblé et analysé les résultats pour synthétiser les besoins, les irritants et les spécificités locales. Les utilisateurs avaient du mal à trouver les informations produit à jour, à identifier les produits associés nécessaires à une installation et à accéder aux documents juridiques dans leur langue. Ils devaient souvent consulter plusieurs sources et y perdaient du temps.\n\nNous avons présenté ces enseignements lors d’un atelier de co-création pour définir les grandes fonctionnalités du MVP. À l’aide de questions « How might we », de l’exercice Idea Napkin et du story mapping, les participants ont travaillé en groupes autour des profils d’installateur, d’architecte et de distributeur.\n\nJ’ai ensuite cartographié les parcours et réalisé des croquis papier basse fidélité avant de passer à un prototype haute fidélité dans Figma. Nous avons testé et fait évoluer le prototype avec des utilisateurs finaux, dans différents rôles et pays.',
         learning: 'Le prototype testé a obtenu une note moyenne de 8/10. Il répondait à un besoin exprimé de longue date pour un catalogue numérique, tout en restant simple et accessible.',
@@ -80,7 +84,8 @@ export const projects: Project[] = [
     role: 'Senior UX Researcher & Service Designer',
     desc: 'How can we support people going through alcohol addiction who cannot easily access care?',
     className: 'art-green',
-    tag: 'HEALTH · ACCESS TO CARE',
+    tag: 'Kamet - Clariane - Access to Care',
+    client: 'Kamet · Clariane',
     contextTitle: 'Making care available to people who need it.',
     context: 'In collaboration with Clariane, the project explored chronic diseases and innovative solutions that could be developed into startups. Addiction was selected as an important area to address: more people need support for substance use than there are care solutions available. The mission was to help people affected by dependency who need care but are not currently able to access treatment.',
     approachTitle: 'Research, co-creation and iterative validation.',
@@ -96,7 +101,8 @@ export const projects: Project[] = [
         kind: 'Étude de cas',
         role: 'Senior UX Researcher & Service Designer',
         desc: 'Comment accompagner les personnes confrontées à l’alcoolodépendance qui n’accèdent pas facilement aux soins ?',
-        tag: 'SANTÉ · ACCÈS AUX SOINS',
+        tag: 'Kamet - Clariane - Accès aux soins',
+        client: 'Kamet · Clariane',
         contextTitle: 'Rendre les soins accessibles aux personnes qui en ont besoin.',
         context: 'En collaboration avec Clariane, le projet explorait les maladies chroniques et des solutions innovantes pouvant donner naissance à des startups. L’addiction a été choisie comme enjeu prioritaire : les besoins de soutien liés à l’usage de substances dépassent l’offre de soins disponible. La mission était d’aider les personnes concernées par une dépendance qui ont besoin de soins mais ne peuvent pas actuellement accéder à un accompagnement.',
         approachTitle: 'Recherche, co-création et validation itérative.',
@@ -118,6 +124,7 @@ export const projects: Project[] = [
     desc: 'Connecting startups and the tech industry.',
     className: 'art-lilac',
     tag: 'DIGITAL WALLONIA · DIGITAL ECOSYSTEM',
+    client: 'Digital Wallonia',
     contextTitle: 'Helping people find their way through a data-rich platform.',
     context: 'Digital Wallonia is Belgium’s platform for representing and connecting Wallonia’s digital strategy and network. With a large volume of information to share, the client wanted to refresh the website so it would be more user-friendly and personalize content around the needs of different audiences. My role was to rethink the user journeys and create an MVP prototype.',
     approachTitle: 'Researching needs, structuring content and testing flows.',
@@ -134,6 +141,7 @@ export const projects: Project[] = [
         role: 'Senior UX Designer',
         desc: 'Relier les startups et le secteur technologique.',
         tag: 'DIGITAL WALLONIA · ÉCOSYSTÈME NUMÉRIQUE',
+        client: 'Digital Wallonia',
         contextTitle: 'Aider chacun à se repérer dans une plateforme riche en informations.',
         context: 'Digital Wallonia est la plateforme belge qui représente et relie la stratégie et le réseau numériques de la Wallonie. Face au volume important d’informations à partager, le client souhaitait actualiser le site afin de le rendre plus simple à utiliser et de personnaliser les contenus selon les besoins des différents publics. Mon rôle consistait à repenser les parcours utilisateurs et à créer un prototype de MVP.',
         approachTitle: 'Comprendre les besoins, structurer les contenus et tester les parcours.',
@@ -149,12 +157,12 @@ export const projects: Project[] = [
   {
     id: 'cancer-hospital-experience',
     title: 'Improving the hospital experience for people with cancer',
-    kind: 'UX research · Patient experience',
+    kind: 'Healthcare · Pharma · Oncology',
     year: '',
     role: 'UX & Service Designer',
     desc: 'Making hospital treatment more understandable and waiting time more comfortable for people receiving immunotherapy.',
     className: 'art-lilac',
-    tag: 'HEALTHCARE · ONCOLOGY',
+    tag: 'Healthcare - Pharma - Oncology',
     contextTitle: 'Understanding the experience around treatment.',
     context: 'An international medical company providing treatments, including an immunotherapy used for some forms of cancer, wanted to better understand patients’ experience during and after treatment. The team had limited insight into what patients experienced immediately before and after receiving medication. The project explored ways to improve the hospital experience throughout treatment.',
     approachTitle: 'Research, co-creation and concept testing.',
@@ -167,10 +175,10 @@ export const projects: Project[] = [
     translations: {
       fr: {
         title: 'Améliorer l’expérience à l’hôpital des personnes atteintes d’un cancer',
-        kind: 'Étude de cas',
+        kind: 'Santé · Pharmacie · Oncologie',
         role: 'UX & Service Designer',
         desc: 'Rendre les traitements à l’hôpital plus compréhensibles et les temps d’attente plus agréables pour les personnes recevant une immunothérapie.',
-        tag: 'SANTÉ · ONCOLOGIE',
+        tag: 'Santé - Pharmacie - Oncologie',
         contextTitle: 'Comprendre l’expérience autour du traitement.',
         context: 'Une entreprise médicale internationale, qui propose notamment une immunothérapie utilisée pour certaines formes de cancer, souhaitait mieux comprendre l’expérience des patients pendant et après leur traitement. L’équipe disposait de peu d’informations sur ce que vivaient les patients juste avant et après l’administration du médicament. Le projet explorait des moyens d’améliorer l’expérience à l’hôpital tout au long du traitement.',
         approachTitle: 'Recherche, co-création et test de concepts.',
@@ -192,6 +200,7 @@ export const projects: Project[] = [
     desc: 'Refining the SelfRef autonomous eye-exam experience and validating it with US practitioners and patients ahead of Vision Expo.',
     className: 'art-green',
     tag: 'SIVIEW · AUTONOMOUS EYE EXAMS',
+    client: 'SiView',
     contextTitle: 'Preparing an autonomous eye exam for a US launch.',
     context: 'SiView, a French scale-up developing AI-driven services for eye exams, was preparing to present its SelfRef autonomous eye-exam product at a US-based expo. The team needed to refine the existing journey, improve the English wording translated from French, and validate the experience. The scope covered the end-to-end autonomous exam and the supporting Android screens.',
     approachTitle: 'Research, design and validate under a tight schedule.',
@@ -207,6 +216,7 @@ export const projects: Project[] = [
         role: 'UX Designer & Researcher',
         desc: 'Améliorer l’expérience de l’examen autonome SelfRef et la valider auprès de professionnels de santé et de patients américains avant Vision Expo.',
         tag: 'SIVIEW · EXAMEN DE LA VUE AUTONOME',
+        client: 'SiView',
         contextTitle: 'Préparer le lancement américain d’un examen de la vue autonome.',
         context: 'SiView, une scale-up française qui développe des services d’examen de la vue fondés sur l’IA, préparait la présentation de son produit SelfRef lors d’un salon aux États-Unis. L’équipe souhaitait améliorer le parcours existant, retravailler sa version anglaise traduite du français et valider l’expérience. Le périmètre couvrait l’examen autonome de bout en bout et les écrans Android associés.',
         approachTitle: 'Rechercher, concevoir et valider dans un délai serré.',
@@ -227,6 +237,7 @@ export const projects: Project[] = [
     desc: 'Researching store teams’ needs and mapping a smooth transition to a new point-of-sale system across brands and countries.',
     className: 'art-lilac',
     tag: 'KERING · POS ADOPTION',
+    client: 'Kering',
     contextTitle: 'A global POS transition across multiple luxury brands.',
     context: 'Kering needed to transition to a new point-of-sale (POS) system. The group needed help identifying the right solution and creating a deployment plan to organize the switch worldwide and across its brands. My role was to identify relevant use cases and the needs of sales associates, then help shape a user-friendly POS choice and adoption strategy.',
     approachTitle: 'Research, benchmark and plan adoption.',
@@ -242,6 +253,7 @@ export const projects: Project[] = [
         role: 'Service Designer',
         desc: 'Comprendre les besoins des équipes en magasin et planifier une transition fluide vers un nouveau système de point de vente pour plusieurs marques et pays.',
         tag: 'KERING · ADOPTION DU POS',
+        client: 'Kering',
         contextTitle: 'Une transition mondiale pour plusieurs maisons de luxe.',
         context: 'Kering devait migrer vers un nouveau système de point de vente (POS). Le groupe avait besoin d’aide pour identifier la solution adaptée et créer un plan de déploiement à l’échelle mondiale et pour l’ensemble de ses marques. Mon rôle consistait à identifier les cas d’usage pertinents et les besoins des équipes de vente, puis à contribuer au choix d’un POS simple à utiliser et à la stratégie d’adoption.',
         approachTitle: 'Recherche, benchmark et plan d’adoption.',
